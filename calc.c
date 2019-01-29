@@ -22,26 +22,26 @@ struct listnode {
 /*	newEmptyList function. Creates a list whose head points to NULL. Returns the pointer
 	to this list. */
 struct list * newEmptyList() {
-	struct list * result;						// create a pointer to a list called result
+	struct list * result;				// create a pointer to a list called result
 	result = malloc(sizeof(struct list));		// allocate a space in memory the size of a list
-	result->head = NULL;						// set the head of the list to null
+	result->head = NULL;				// set the head of the list to null
 	return result;
 }
 
 /*	addToList function. Given the list and the double to put on it, puts the double on the list (on top
 	of the stack). Placed between the head and the next element in the list (if there is one). */
 void addToList(struct list * theList, double element) {
-	struct listnode * newNode;					// create a pointer to a new node
+	struct listnode * newNode;			// create a pointer to a new node
 	newNode = malloc(sizeof(struct listnode));	// allocate memory for the pointer
-	newNode->data = element;					// set the double in the node to the passed value
+	newNode->data = element;			// set the double in the node to the passed value
 	if (theList->head == NULL) {
-		theList->head = newNode;					// if the list is empty, the head points to the new node
-		newNode->next = NULL;						// if the list is empty, the newNode will point to NULL
+		theList->head = newNode;		// if the list is empty, the head points to the new node
+		newNode->next = NULL;			// if the list is empty, the newNode will point to NULL
 	}
 	else {
-		newNode->next = theList->head;			// if there are elements in the list, our new node will
-												// point to the element that head was pointing to
-		theList->head = newNode;				// the head points to the new node at the top of the stack									
+		newNode->next = theList->head;		// if there are elements in the list, our new node will
+							// point to the element that head was pointing to
+		theList->head = newNode;		// the head points to the new node at the top of the stack									
 	}
 }
 
@@ -50,13 +50,13 @@ void addToList(struct list * theList, double element) {
 double popFromList(struct list * theList) {
 	double elemToPop = 0;
 	struct listnode * nodeToPop;
-	nodeToPop = theList->head;					// the node to pop is the node at the top of the stack
+	nodeToPop = theList->head;			// the node to pop is the node at the top of the stack
 	if (nodeToPop != NULL) {
-		elemToPop = nodeToPop->data;				// the element to pop off is the one in the node at the top
-		theList->head = nodeToPop->next;			// the head points at where the node at the top points, popping it off
-		free(nodeToPop);										// free the popped node to avoid memory leak
+		elemToPop = nodeToPop->data;		// the element to pop off is the one in the node at the top
+		theList->head = nodeToPop->next;	// the head points at where the node at the top points, popping it off
+		free(nodeToPop);			// free the popped node to avoid memory leak
 	}
-	return elemToPop;							// return the element as a double
+	return elemToPop;				// return the element as a double
 }
 
 /* 	readFile function. Reads in a file of a passed name and returns it as an
@@ -112,7 +112,7 @@ int isValid(char c){
 	back on the stack. */
 double compute(char operator, struct list * theList) {
 	double result;
-	double secondTerm = popFromList(theList);				//the first term to pop will be the second term of the computation
+	double secondTerm = popFromList(theList);		// the first term to pop will be the second term of the computation
 	double firstTerm = popFromList(theList);
 	switch (operator)
 	{
@@ -135,19 +135,19 @@ int readNumber(int index, char* file, struct list * theList) {
 		tmpIndex++;
 	}
 	int numberSize = (tmpIndex - index) + 1;		// the size of number should be space for all the
-												// number chars and 0, which terminates a String
+								// number chars and 0, which terminates a String
 	char * number;
-	number = malloc(sizeof(char)*numberSize);	// allocate enough memory for the number chars and 0
+	number = malloc(sizeof(char)*numberSize);		// allocate enough memory for the number chars and 0
 	tmpIndex = index;
 	for (int i = 0; i < numberSize - 1; i++) {
-		number[i] = file[tmpIndex];					// copy the number from file to number
+		number[i] = file[tmpIndex];			// copy the number from file to number
 		tmpIndex++;
 	}
-	number[numberSize - 1] = 0;						// null-terminate the string
-	double numberAsDouble = atof(number);		// get the string as a double
+	number[numberSize - 1] = 0;				// null-terminate the string
+	double numberAsDouble = atof(number);			// get the string as a double
 	addToList(theList, numberAsDouble);			// add the result to the list
 	free(number);
-	return tmpIndex + 1;							// return the index of the space after the number in file
+	return tmpIndex + 1;					// return the index of the space after the number in file
 }
 
 /* readNumForInfix function. Reads a decimal number as a subtring and adds it 
@@ -161,7 +161,7 @@ int readNumForInfix(int index, char* file, char* postfixString, int* postfixInde
 	int numberSize = (tmpIndex - index);
 	for (int i = 0; i < numberSize; i++) {
 		if(file[index]!='\n'){
-			postfixString[*postfixIndexPointer] = file[index];					// copy the number from file to number
+			postfixString[*postfixIndexPointer] = file[index];	// copy the number from file to number
 			(*postfixIndexPointer)++;
 		}
 		index++;
@@ -181,7 +181,7 @@ int findPrecedence(char operator) {
 	case '/': return 2;
 	case '+':
 	case '-': return 1;
-	default: return 0;			//	if the function is given a non-operator it returns the lowest precedence 
+	default: return 0;			// if the function is given a non-operator it returns the lowest precedence 
 	}
 }
 
@@ -226,8 +226,8 @@ char* infixToPostfix(char* infixString, char postfixString[]) {
 		case '+': case '-': case 'X': case '/': case '^': {
 			char operator = (char)popFromList(theList);
 			if(isValid(operator)){
-				while (findPrecedence(operator) > findPrecedence(currentChar)) {				// while(there is an operator on top of the stack wih higher precedence) {
-					postfixString[postfixIndex]=operator;//		pop stack and append popped operator to output string
+				while (findPrecedence(operator) > findPrecedence(currentChar)) { // while(there is an operator on top of the stack wih higher precedence)
+					postfixString[postfixIndex]=operator;			 //  pop stack and append popped operator to output string
 					postfixIndex++;					
 					postfixString[postfixIndex]=' ';
 					postfixIndex++;			
@@ -236,7 +236,7 @@ char* infixToPostfix(char* infixString, char postfixString[]) {
 				
 			}
 			if(operator!=0) {addToList(theList, (double)operator);}
-			addToList(theList, (double)currentChar);										//	push token operator to stack
+			addToList(theList, (double)currentChar);				// push token operator to stack
 			index++;
 			break; }
 		case '(':
@@ -246,14 +246,14 @@ char* infixToPostfix(char* infixString, char postfixString[]) {
 		case ')': {
 			char operator = 0;
 			do {																					// while (top of stack != '(' ) {
-				operator = (char)popFromList(theList);		// pop operator from stack and append to output string
+				operator = (char)popFromList(theList);				// pop operator from stack and append to output string
 				if (operator!='(') {
 					postfixString[postfixIndex]=operator;
 					postfixIndex++;	
 					postfixString[postfixIndex]=' ';
 					postfixIndex++;
 				}
-			} while (operator!='(');											//	}
+			} while (operator!='(');
 			index++;
 			break; }
 		default: if ((currentChar >= '0' && currentChar <= '9') || currentChar == '.') {
