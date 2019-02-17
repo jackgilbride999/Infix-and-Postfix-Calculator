@@ -2,8 +2,8 @@
 C Program which takes infix and postfix sums as lines of a file. Converts any infix sums to postfix and computes all sums in postfix.
 
 Sample well-formed file:
-infix 3 + 5 X ( 7 - 22 )
-infix 36 X ( 7 + 9 + 8 -3 ) / 6
+infix 3 + 5 X ( 7 - 22 )  
+infix 36 X ( 7 + 9 + 8 -3 ) / 6  
 postfix 7 8 3 X 28 + +
 
 USAGE:
